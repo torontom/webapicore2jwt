@@ -36,7 +36,7 @@ namespace rest.Controllers
                                     .AddIssuer("issuerTest")
                                     .AddAudience("bearerTest")
                                     .AddClaim("MembershipId", "111")
-                                    .AddExpiry(1)
+                                    .AddExpiry(20)   // token will expire in 20 minute
                                     .Build();
 
                 return Ok(token.Value);

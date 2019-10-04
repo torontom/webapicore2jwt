@@ -1,4 +1,6 @@
-# Example of REST API Using MongoDB, .NET Core 2.0 and JWT Authentication
+# Example of REST API Using .NET Core 2.0, JWT Authentication and MongoDB.
+
+## This is a clone of [this project](https://github.com/fabioono25/webapicore2jwt), it's **fully working** and I **like** it.
 
 ### Technologies:
 
@@ -8,10 +10,9 @@
 
 ### Running this solution:
 
-First download or clone the project in a local directory:
+First of all, download or clone the project to a local directory.
 
-Then you must create a local or cloud MongoDB instance. In this instance, it's necessary the creation of a **ProductDb**
-database and two collections, **Product** and **User**. You can use this commands bellow so you can incluse the user:
+Then you need to create a local MongoDB instance. In this example, create a database named as **ProductDb** and two collections: **Product** and **User**, then use the following command to insert a document into **User**, you can also do it with **MongoDB Compass** if you have it installed:
 
 ```javascript
 db.User.insert({"Name": "Joao Teste", "Login": "joao", "Password": "1234"})
@@ -19,7 +20,7 @@ db.User.insert({"Name": "Joao Teste", "Login": "joao", "Password": "1234"})
 
 ![Alt text](https://github.com/fabioono25/webapicore2jwt/blob/master/Images/mongodb.png "MongoDB Configuration")
 
-It's necessary to configure **appsettings.Development.json** with your instance of MongoDB:
+It's necessary to configure **appsettings.json** with your instance of MongoDB:
 
 ```javascript
 "ConnectionString": "mongodb://localhost:27017",
@@ -27,7 +28,7 @@ It's necessary to configure **appsettings.Development.json** with your instance 
 
 Next, you can open you project in Visual Studio or Visual Studio Code. You can type these two commands (to restore nuget package components and run the API):
 
-```mongodb
+```javascript
 dotnet restore
 ```
 
@@ -35,13 +36,13 @@ dotnet restore
 dotnet run
 ```
 
-Now, if everything is all right, your API will be working. You must run the command bellow so you can create as authentication token:
+Now, if everything is all right, your API will be working. Do the following POST in postman so you can get an authentication token (your port number might be different):
 
 ```javascript
-http://localhost:5000/api/Auth
+POST http://localhost:5000/api/Auth
 ```
 
-Remember: it's necessary define **user** and **password** in payload:
+With payload:
 
 ```javascript
 {
@@ -52,7 +53,7 @@ Remember: it's necessary define **user** and **password** in payload:
 
 The result is like this:
 
-![Alt text](https://github.com/fabioono25/webapicore2jwt/blob/master/Images/postmanok.png "Postman Token")
+![Alt text](https://github.com/fabioono25/webapicore2jwt/blob/master/Images/postmantoken.png "Postman Token")
 
 You must use this token so you can use GET, POST, PUT, DELETE verbs. For every of these REST verbs, you must put the generated token in **Authorization Header**, with the word **Bearer** like this:
 
@@ -64,7 +65,7 @@ Value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqb2FvIiwianRpIjoiM
 To use POST, so you can insert some Products, use this URL bellow:
 
 ```javascript
-http://localhost:5000/api/Products
+POST http://localhost:5000/api/Products
 ```
 
 With this payloads:
@@ -100,16 +101,16 @@ With this payloads:
 Now you can list the products inserted. Use this URL:
 
 ```javascript
-https://github.com/fabioono25/webapicore2jwt/blob/master/Images/postmanok.png
+GET http://localhost:60757/api/Products
 ```
 
 ![Alt text](https://github.com/fabioono25/webapicore2jwt/blob/master/Images/postmanok.png "Postman Product List")
 
 
-Remember, we are using a JWT Token Authentication. The definition of the expiration is 1 minute. Because of this, you maybe get **Error 401 - Unauthorized**. It's perfectly normal: 
+Remember, we are using a JWT Token Authentication. The definition of the expiration is 20 minute. Because of this, you maybe get **Error 401 - Unauthorized**. It's perfectly normal: 
 
 
-![Alt text](https://github.com/fabioono25/webapicore2jwt/blob/master/Images/postmanUnauthorized.png "Postman Product List")
+![Alt text](https://github.com/fabioono25/webapicore2jwt/blob/master/Images/postmanUnauthorized.png "Postman Unauthorized")
 
 You just generate another token and put it on Header Authorization.
 

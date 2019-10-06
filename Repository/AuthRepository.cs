@@ -35,7 +35,7 @@ namespace rest.Repository
         public async Task<User> GetUser(string login, string password){
 
             var builder = Builders<User>.Filter;
-            var filter = builder.Eq("Login", login) & builder.Eq("Password", password);
+            var filter = builder.Eq("username", login) & builder.Eq("password", password);
 
             return await _context.Users
                         .Find(filter)

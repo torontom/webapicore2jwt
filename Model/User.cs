@@ -9,9 +9,12 @@ namespace rest.Model
     public class User
     {
         [BsonId]
-        public ObjectId Id { get; set; }
-        public string Name { get; set; }
-        public string Login { get; set; }
-        public string Password { get; set; }
+        public ObjectId id { get; set; }
+        public string username { get; set; }
+        public string password { get; set; }
+        public string firstName { get; set; }
+        public string lastName { get; set; }
+        public string token { get; set; }
+
     }
 }

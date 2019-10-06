@@ -24,25 +24,26 @@ namespace rest.Controllers
 
         // POST api/Auth
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody]User user)
+        public async Task<User> Create([FromBody]User user)
         {
-            var usr = await _AuthRepository.GetUser(user.Login, user.Password);
+            User usr = await _AuthRepository.GetUser(user.username, user.password);
 
-            if (usr != null){
+            if (usr != null) {
 
                 var token = new JwtTokenBuilder()
                                     .AddSecurityKey(JwtSecurityKey.Create("key-value-token-expires"))
-                                    .AddSubject(user.Login)
+                                    .AddSubject(usr.username)
                                     .AddIssuer("issuerTest")
                                     .AddAudience("bearerTest")
                                     .AddClaim("MembershipId", "111")
                                     .AddExpiry(20)   // token will expire in 20 minute
                                     .Build();
+                usr.token = token.Value;
+                usr.password = "";                
+                return usr;
 
-                return Ok(token.Value);
-
-            }else
-                return Unauthorized();
+            } else
+                return null;
         }
     }
 }
